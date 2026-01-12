@@ -41,7 +41,7 @@ def Joueur(couleur, nom, reserve, surface, points, position, objet, duree_objet)
     joueur["reserve"]=reserve
     joueur["surface"]=surface
     joueur["points"]=points
-    joueur["position"]=position
+    joueur["pos"]=position
     joueur["objet"]=objet
     joueur["duree_objet"]=duree_objet
     return joueur
