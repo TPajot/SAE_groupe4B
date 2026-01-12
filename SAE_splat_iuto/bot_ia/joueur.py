@@ -96,7 +96,7 @@ def get_nom(joueur):
     Returns:
         str: le nom du joueur
     """
-    ...
+    return joueur["nom"]
 
 
 def get_reserve(joueur):
