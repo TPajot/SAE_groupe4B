@@ -166,7 +166,8 @@ def set_pos(joueur, pos):
         joueur (dict): le joueur considéré
         pos (tuple): une paire d'entier (lin,col) indiquant la position du joueur
     """
-    ...
+    joueur["pos"] = pos
+    return joueur["pos"]
 
 
 def modifie_reserve(joueur, quantite):
@@ -181,8 +182,8 @@ def modifie_reserve(joueur, quantite):
     Returns:
         int: la nouvelle valeur de la réserve
     """
-    
-    ...
+    joueur["reserve"] = quantite 
+    return joueur["reserve"] 
 
 def set_surface(joueur, surface):
     """met à jour la surface du joueur
@@ -191,7 +192,7 @@ def set_surface(joueur, surface):
         joueur (dict): le joueur considéré
         surface (int): la nouvelle valeur de la surface
     """
-    ...
+    joueur["surface"] = surface
 
 def maj_points(joueur):
     """met à jour le nombre de points du joueur en ajoutant la surface qu'il possède
@@ -199,7 +200,8 @@ def maj_points(joueur):
     Args:
         joueur (dict): le joueur considéré
     """
-    ...
+    joueur["points"] = joueur["points"] + joueur["surface"] 
+    
 
 def ajouter_objet(joueur, objet):
     """ajoute un objet au joueur (celui-ci ne peut en avoir qu'un à la fois).
@@ -209,7 +211,7 @@ def ajouter_objet(joueur, objet):
         joueur (dict): le joueur considéré
         objet (int): l'objet considéré
     """
-    ...
+    
 
 def maj_duree(joueur):
     """décrémente la durée de vie de l'objet du joueur (si celui-ci en a un).
