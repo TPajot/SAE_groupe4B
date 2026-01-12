@@ -136,7 +136,7 @@ def get_duree(joueur):
     Returns:
         int: un entier indiquant la durée de vie l'objet possédé par le joueur
     """
-    return joueur["duree"] 
+    return joueur["duree_objet"] 
 
 
 def get_points(joueur):
