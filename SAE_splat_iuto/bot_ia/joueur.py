@@ -64,12 +64,12 @@ def joueur_from_str(description):
     liste_carac = description.split(";")
 
     couleur = liste_carac[0]
-    reserve = liste_carac[1]
-    surface = liste_carac[2]
-    points = liste_carac[3]
-    objet = liste_carac[4]
-    duree_objet=liste_carac[5]
-    position = (liste_carac[6],liste_carac[7])
+    reserve = int(liste_carac[1])
+    surface = int(liste_carac[2])
+    points = int(liste_carac[3])
+    objet = int(liste_carac[4])
+    duree_objet=int(liste_carac[5])
+    position = (int(liste_carac[6]),int(liste_carac[7]))
     nom = liste_carac[8]
 
     joueur_cree = Joueur(couleur,nom,reserve,surface,points,position,objet,duree_objet)
