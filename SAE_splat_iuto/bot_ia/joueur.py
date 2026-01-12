@@ -240,4 +240,17 @@ def classement_joueurs(liste_joueurs,critere):
     Returns:
         list: la liste des joueurs triées suivant le critère indiqué.
     """
-    ...
+    liste_triee = []
+    if critere == "points" :
+        def critere_point(joueur) :
+            return joueur["points"]
+        liste_triee = sorted(liste_joueurs, key = critere_point)
+    else : 
+        def critere_surface(joueur) :
+            return joueur["surface"]
+        def critere_reserve(joueur) :
+            return joueur["reserve"]
+        liste_triee = sorted(sorted(liste_joueurs, key = critere_surface),key = critere_reserve)
+    return liste_triee
+        
+    
