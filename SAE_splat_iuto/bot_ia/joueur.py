@@ -35,7 +35,16 @@ def Joueur(couleur, nom, reserve, surface, points, position, objet, duree_objet)
     Returns:
         dict: un dictionnaire représentant le joueur
     """
-    ...
+    joueur = {}
+    joueur["couleur"]=couleur
+    joueur["nom"]=nom
+    joueur["reserve"]=reserve
+    joueur["surface"]=surface
+    joueur["points"]=points
+    joueur["position"]=position
+    joueur["objet"]=objet
+    joueur["duree_objet"]=duree_objet
+    return joueur
 
 def joueur_from_str(description):
     """créer un joueur à partir d'un chaine de caractères qui contient
