@@ -182,7 +182,8 @@ def modifie_reserve(joueur, quantite):
     Returns:
         int: la nouvelle valeur de la réserve
     """
-    joueur["reserve"] = quantite 
+    if joueur["reserve"]+quantite <= const.CAPACITE_RESERVOIR:
+        joueur["reserve"] += quantite 
     return joueur["reserve"] 
 
 def set_surface(joueur, surface):
@@ -200,7 +201,7 @@ def maj_points(joueur):
     Args:
         joueur (dict): le joueur considéré
     """
-    joueur["points"] = joueur["points"] + joueur["surface"] 
+    joueur["points"] += joueur["surface"] 
     
 
 def ajouter_objet(joueur, objet):
