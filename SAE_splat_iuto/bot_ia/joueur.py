@@ -216,10 +216,12 @@ def ajouter_objet(joueur, objet):
         joueur (dict): le joueur considéré
         objet (int): l'objet considéré
     """
-    joueur["objet"]=objet
-    if joueur["objet"]== const.BIDON and joueur["reserve"] < 0:
-        joueur["reserve"] = 0
-    return joueur
+    if objet==const.BIDON:
+        if joueur["reserve"]<0:
+            joueur["reserve"]=0
+
+    elif objet != const.BIDON:
+        joueur["objet"]=objet
 
 def maj_duree(joueur):
     """décrémente la durée de vie de l'objet du joueur (si celui-ci en a un).
@@ -247,17 +249,17 @@ def classement_joueurs(liste_joueurs,critere):
     Returns:
         list: la liste des joueurs triées suivant le critère indiqué.
     """
+    #comme c'es un classement LES PREMIERS de la liste ont le + de points et de surface DONC ordre DECROISSANT
     liste_triee = []
     if critere == "points" :
         def critere_point(joueur) :
             return joueur["points"]
-        liste_triee = sorted(liste_joueurs, key = critere_point)
+        liste_triee = sorted(liste_joueurs, key = critere_point, reverse = True)
     else : 
         def critere_surface(joueur) :
             return joueur["surface"]
         def critere_reserve(joueur) :
             return joueur["reserve"]
-        liste_triee = sorted(sorted(liste_joueurs, key = critere_reserve),key = critere_surface)
+        liste_triee = sorted(sorted(liste_joueurs, key = critere_reserve, reverse = True),key = critere_surface, reverse = True)
     return liste_triee
-
 
