@@ -368,7 +368,7 @@ def nb_joueurs_direction(plateau, pos, direction, distance_max):
     Returns:
         int: le nombre de joueurs à portée de peinture (ou qui risque de nous peindre)
     """
-    ...
+    
 
 def distances_objets_joueurs(plateau, pos, distance_max):
     """calcul les distances entre la position pos est les différents objets et
@@ -383,4 +383,42 @@ def distances_objets_joueurs(plateau, pos, distance_max):
             contenant à la fois des objets et des joueurs. Attention le dictionnaire ne doit contenir
             des entrées uniquement pour les distances où il y a effectivement au moins un objet ou un joueur
     """ 
-    ...
+    dico = {}
+    cases_a_dist = [(pos,0)] #liste de tuples (positions_disponibles,dist)
+    vues = [pos]
+    i=0
+    dist = 0 #on mesure la distance petit à petit par rapport a la pos d'origine donc vaut 0 au début
+    while i < len(cases_a_dist):
+        
+        pos_case_courrante = cases_a_dist[i][0]
+        case_courrante = get_case(plateau,pos_case_courrante)
+
+        objet_case_c = case.get_objet(case_courrante)
+        joueurs_case_c = case.get_joueurs(case_courrante)
+
+        if objet_case_c != const.AUCUN:
+            if dist not in dico.keys():
+                dico[dist]=set()
+            dico[dist].add(objet_case_c)
+            #dico[dist]=dico.get(dist,set()).add(objet_case_c) #si il y a un objet, je rajoute à l'ensemble l'objet (je crée un ensemble vite puis jajoute l'objet si dist_courrante n'est pas dans les keys)
+        
+        if joueurs_case_c!=set():
+            for joueur in joueurs_case_c:
+                if dist not in dico.keys():
+                    dico[dist]=set()
+                dico[dist].add(joueur)
+                #dico[dist]=dico.get(dist,set()).add(joueur) #pareil avec les joueur cette fois
+        
+        dist += 1
+        if dist<distance_max:
+            direction_voisines = directions_possibles(plateau,pos_case_courrante) #dico sous la forme {direction_possible:couleur}
+            for direction in direction_voisines.keys():
+                pos_prochaine_case = (pos_case_courrante[0]+INC_DIRECTION[direction][0],pos_case_courrante[1]+INC_DIRECTION[direction][1])
+
+                if pos_prochaine_case not in vues: #si je n'ai pas déjà vue la position
+                    cases_a_dist.append((pos_prochaine_case,dist))
+                    vues.append(pos_prochaine_case)
+        
+        i+=1
+
+    return dico
