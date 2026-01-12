@@ -84,7 +84,7 @@ def get_couleur(joueur):
     Returns:
         str: une lettre indiquant la couleur du joueur
     """
-    ...
+    return joueur["couleur"] 
 
 
 def get_nom(joueur):
@@ -106,7 +106,7 @@ def get_reserve(joueur):
     Returns:
         int: la réserve du joueur
     """
-    ...
+    return joueur["reserve"]
 
 def get_surface(joueur):
     """retourne le nombre de cases peintes par le joueur
@@ -117,7 +117,7 @@ def get_surface(joueur):
     Returns:
         int: le nombre de cases peintes du joueur
     """
-    ...
+    return joueur["surface"] 
 
 
 def get_objet(joueur):
@@ -127,7 +127,7 @@ def get_objet(joueur):
     Returns:
         int: un entier indiquant l'objet possédé par le joueur
     """
-    ...
+    return joueur["objet"] 
 
 def get_duree(joueur):
     """retourne la duree de vie de l'objet possédé par le joueur
@@ -136,7 +136,7 @@ def get_duree(joueur):
     Returns:
         int: un entier indiquant la durée de vie l'objet possédé par le joueur
     """
-    ...
+    return joueur["duree"] 
 
 
 def get_points(joueur):
@@ -146,7 +146,7 @@ def get_points(joueur):
     Returns:
         int: un entier indiquant le nombre de points du joueur
     """
-    ...
+    return joueur["points"]
 
 def get_pos(joueur):
     """retourne la position du joueur. ATTENTION c'est la position stockée dans le
@@ -156,7 +156,7 @@ def get_pos(joueur):
     Returns:
         tuple: une paire d'entiers indiquant la position du joueur.
     """
-    ...
+    return joueur["pos"] 
 
 
 def set_pos(joueur, pos):
