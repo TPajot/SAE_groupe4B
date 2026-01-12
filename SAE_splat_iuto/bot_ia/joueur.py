@@ -187,7 +187,7 @@ def modifie_reserve(joueur, quantite):
 
     else:
         joueur["reserve"]=const.CAPACITE_RESERVOIR
-        
+
     return joueur["reserve"] 
 
 def set_surface(joueur, surface):
@@ -225,8 +225,12 @@ def maj_duree(joueur):
     Args:
         joueur (dict): le joueur considéré
     """
-    ...
-    
+    if joueur["objet"]!=0: #si le joueur a un objet
+        joueur["duree_objet"]-=1
+
+    if joueur["duree_objet"] == 0:
+        joueur["objet"]= 0
+        
 def classement_joueurs(liste_joueurs,critere):
     """retourne le classement des joueurs suivant un certain critère. Vous pouvez utiliser les fonctions de tri de Python.
 
