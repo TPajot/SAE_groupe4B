@@ -216,7 +216,10 @@ def ajouter_objet(joueur, objet):
         joueur (dict): le joueur considéré
         objet (int): l'objet considéré
     """
-    
+    joueur["objet"]=objet
+    if joueur["objet"]== const.BIDON and joueur["reserve"] < 0:
+        joueur["reserve"] = 0
+    return joueur
 
 def maj_duree(joueur):
     """décrémente la durée de vie de l'objet du joueur (si celui-ci en a un).
