@@ -184,6 +184,10 @@ def modifie_reserve(joueur, quantite):
     """
     if joueur["reserve"]+quantite <= const.CAPACITE_RESERVOIR:
         joueur["reserve"] += quantite 
+
+    else:
+        joueur["reserve"]=const.CAPACITE_RESERVOIR
+        
     return joueur["reserve"] 
 
 def set_surface(joueur, surface):
