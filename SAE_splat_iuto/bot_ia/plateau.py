@@ -379,7 +379,31 @@ def nb_joueurs_direction(plateau, pos, direction, distance_max):
     Returns:
         int: le nombre de joueurs à portée de peinture (ou qui risque de nous peindre)
     """
-    ...
+    nb_joueurs = 0
+    i = 0
+    case_recherche = get_case(plateau,pos)
+    position_recherche = pos
+    while direction in directions_possibles(plateau, position_recherche) and i <= distance_max:
+            if direction == 'N' :
+             nb_joueurs += case.get_nb_joueurs(case_recherche) 
+             position_recherche = (position_recherche[0]-i,position_recherche[1])
+             case_recherche = get_case(plateau, position_recherche)
+            elif direction == 'S' :
+                nb_joueurs += case.get_nb_joueurs(case_recherche) 
+                position_recherche = (position_recherche[0]+1,position_recherche[1])
+                case_recherche = get_case(plateau, position_recherche)
+            elif direction == 'E' :
+                nb_joueurs += case.get_nb_joueurs(case_recherche) 
+                position_recherche = (position_recherche[0],position_recherche[1]+i)
+                case_recherche = get_case(plateau, position_recherche)
+            else : 
+                nb_joueurs += case.get_nb_joueurs(case_recherche) 
+                position_recherche = (position_recherche[0],position_recherche[1]-i)
+                case_recherche = get_case(plateau, position_recherche)
+            i += 1
+    return nb_joueurs 
+
+
 
 def distances_objets_joueurs(plateau, pos, distance_max):
     """calcul les distances entre la position pos est les différents objets et
