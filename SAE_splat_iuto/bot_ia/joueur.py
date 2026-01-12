@@ -254,7 +254,7 @@ def classement_joueurs(liste_joueurs,critere):
             return joueur["surface"]
         def critere_reserve(joueur) :
             return joueur["reserve"]
-        liste_triee = sorted(sorted(liste_joueurs, key = critere_surface),key = critere_reserve)
+        liste_triee = sorted(sorted(liste_joueurs, key = critere_reserve),key = critere_surface)
     return liste_triee
-        
-    
+
+
