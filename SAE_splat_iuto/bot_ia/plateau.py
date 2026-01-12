@@ -21,6 +21,7 @@ from bot_ia import const
 from bot_ia import case
 
 
+
 # dictionnaire permettant d'associer une direction et la position relative
 # de la case qui se trouve dans cette direction
 INC_DIRECTION = {'N': (-1, 0), 'E': (0, 1), 'S': (1, 0),
@@ -313,8 +314,18 @@ def surfaces_peintes(plateau, nb_joueurs):
         dict: un dictionnaire dont les clées sont les identifiants joueurs et les
             valeurs le nombre de cases peintes par le joueur
     """
-    
-    
+    dictionnaire_surfaces = {}
+    for i in range(nb_joueurs) :
+        dictionnaire_surfaces[chr(ord('A')+i)] = 0
+    for i in range(plateau["nb_lignes"]) :
+        for j in range(plateau["nb_colonnes"]) :
+            couleur =  case.get_couleur(get_case(plateau,(i,j)))
+            if couleur != ' ' :
+                dictionnaire_surfaces[couleur] += 1
+    return dictionnaire_surfaces
+
+
+                            
 
 def directions_possibles(plateau,pos):
     """ retourne les directions vers où il est possible de se déplacer à partir
