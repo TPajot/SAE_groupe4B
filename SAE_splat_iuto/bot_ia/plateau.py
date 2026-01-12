@@ -329,7 +329,33 @@ def directions_possibles(plateau,pos):
               de la case d'arrivée si on prend cette direction
               à partir de pos
     """
-    ...
+    dico = {}
+
+    nb_col = get_nb_colonnes(plateau)
+    nb_li = get_nb_lignes(plateau)
+
+    if 0<=pos[0]<nb_li and 0<=pos[1]+1<nb_col:
+        case_E =get_case(plateau,(pos[0],pos[1]+1)) #Est
+        if not case.est_mur(case_E):
+            dico["E"]=case.get_couleur(case_E)
+        
+    if 0<=pos[0]<nb_li and 0<=pos[1]-1<nb_col:
+        case_O =get_case(plateau,(pos[0],pos[1]-1)) #Ouest
+        if not case.est_mur(case_O):
+            dico["O"]=case.get_couleur(case_O)
+
+
+    if 0<=pos[0]+1<nb_li and 0<=pos[1]<nb_col:
+        case_S =get_case(plateau,(pos[0]+1,pos[1])) #Sud
+        if not case.est_mur(case_S):
+            dico["S"]=case.get_couleur(case_S)
+
+    if 0<=pos[0]-1<nb_li and 0<=pos[1]<nb_col:
+        case_N =get_case(plateau,(pos[0]-1,pos[1])) #Nord
+        if not case.est_mur(case_N):
+            dico["N"]=case.get_couleur(case_N)
+
+    return dico
 
 def nb_joueurs_direction(plateau, pos, direction, distance_max):
     """indique combien de joueurs se trouve à portée sans protection de mur.
