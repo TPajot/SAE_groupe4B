@@ -314,6 +314,7 @@ def surfaces_peintes(plateau, nb_joueurs):
             valeurs le nombre de cases peintes par le joueur
     """
     
+    
 
 def directions_possibles(plateau,pos):
     """ retourne les directions vers où il est possible de se déplacer à partir

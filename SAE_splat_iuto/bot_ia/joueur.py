@@ -236,7 +236,6 @@ def maj_duree(joueur):
 
     if joueur["duree_objet"] == 0:
         joueur["objet"]= 0
-        joueur["duree_objet"]=const.DUREE_VIE_OBJET
 
         
 def classement_joueurs(liste_joueurs,critere):
