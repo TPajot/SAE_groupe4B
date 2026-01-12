@@ -301,6 +301,7 @@ def peindre(plateau, pos, direction, couleur, reserve, distance_max, peindre_mur
 
 
 #---------------------------------------------------------#
+#plateau={}
 def surfaces_peintes(plateau, nb_joueurs):
     """retourne un dictionnaire indiquant le nombre de cases peintes pour chaque joueur.
 

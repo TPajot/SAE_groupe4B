@@ -222,6 +222,7 @@ def ajouter_objet(joueur, objet):
 
     elif objet != const.BIDON:
         joueur["objet"]=objet
+        joueur["duree_objet"]=const.DUREE_VIE_OBJET
 
 def maj_duree(joueur):
     """décrémente la durée de vie de l'objet du joueur (si celui-ci en a un).
