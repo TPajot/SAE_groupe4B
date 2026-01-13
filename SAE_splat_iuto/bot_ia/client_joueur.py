@@ -97,13 +97,10 @@ def meilleure_direction_peinture(le_plateau,joueur,distance_max):
         cout_d,score_d = score_cout_simulee_direction(le_plateau,joueur,direction,distance_max)
         if best_direct==None and score_d > score:
             score=score_d
-            cout = cout_d
-        
+            cout = cout_d  
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin
+
 
 def alarme_reserve(joueur):
     """Vérifie si la réseve du joueur va bientôt s'épuiser
