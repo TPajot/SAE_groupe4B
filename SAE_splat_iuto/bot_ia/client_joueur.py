@@ -47,6 +47,25 @@ def analyse_case(plateau,joueur,): # plateau est un dico représenté comme ça:
                  resultat["adversaire"].append((i,j)) 
     return resultat  
 
+def trouver_mon_joueur(ma_couleur,les_joueurs):
+    """Trouve mon joueur (=joueur qui a ma couleur)
+
+    Args:
+        ma_couleur (str): ma couleur = la couleur de mon joueur
+        les_joueurs (list): une liste de joueurs avec leurs caractéristiques (liste de dictionnaires)
+
+    Returns:
+        dict: mon joueur et ses caractéristiques
+    """    
+    for joueur in les_joueurs:
+        if joueur["couleur"]==ma_couleur:
+            return joueur
+    return None
+
+def analyse_case(plateau,joueur,direction):
+    pass
+
+
 def alarme_reserve(joueur):
     """Vérifie si la réseve du joueur va bientôt s'épuiser
 
@@ -109,6 +128,7 @@ def mon_IA(ma_couleur,carac_jeu, le_plateau, les_joueurs):
         str: une chaine de deux caractères en majuscules indiquant la direction de peinture
             et la direction de déplacement
     """
+    joueur = trouver_mon_joueur(ma_couleur,les_joueurs)
     # IA complètement aléatoire
     return random.choice("XNSOE")+random.choice("NSEO")
 
