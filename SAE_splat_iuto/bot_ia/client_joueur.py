@@ -43,6 +43,34 @@ def trouver_mon_joueur(ma_couleur,les_joueurs):
             return joueur
     return None
 
+def score_cout_simulee_direction(le_plateau,joueur,direction,distance_max):
+    """Simule selon une direction, l'action de peindre et donne le nombre de points gagnés (=de cases repeintes) et le cout de cette action en points de réserve du joueur
+
+    Args:
+        le_plateau (dict): le plateau
+        joueur (dict): mon joueur
+        direction (str): une direction
+        distance_max (int): la distance max 
+
+    Returns:
+        tuple: (score,cout)
+    """    
+    pos_joueur = joueur["pos"]
+    ma_couleur = joueur["couleur"]
+    ma_reserve = joueur["reserve"]
+    mon_objet = joueur["objet"]
+    simul = True
+
+    if mon_objet==const.PISTOLET:
+        peindre_murs = True
+    else:
+        peindre_murs = False
+
+    dict_simulation = plateau.peindre(le_plateau, pos_joueur, direction, ma_couleur, ma_reserve, distance_max, peindre_murs, simul)
+
+    return (dict_simulation["nb_repeintes"],dict_simulation["cout"])
+
+
 def analyse_case(plateau,joueur,direction):
     pass
 
@@ -87,6 +115,8 @@ def attaque_judicieuse(plateau,joueur):
 def direction_plus_zones_vides(plateau,joueur):
     
     pass
+
+
 
 def mon_IA(ma_couleur,carac_jeu, le_plateau, les_joueurs):
     """ Cette fonction permet de calculer les deux actions du joueur de couleur ma_couleur
