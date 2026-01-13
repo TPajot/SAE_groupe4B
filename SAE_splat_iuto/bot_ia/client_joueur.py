@@ -89,7 +89,21 @@ def score_cout_simulee_direction(le_plateau,joueur,direction,distance_max):
 
     return (dict_simulation["nb_repeintes"],dict_simulation["cout"])
 
+def meilleure_direction_peinture(le_plateau,joueur,distance_max):
+    cout = 0
+    score = 0
+    best_direct = None
+    for direction in "NSOE":
+        cout_d,score_d = score_cout_simulee_direction(le_plateau,joueur,direction,distance_max)
+        if best_direct==None and score_d > score:
+            score=score_d
+            cout = cout_d
+        
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin
 
 def alarme_reserve(joueur):
     """Vérifie si la réseve du joueur va bientôt s'épuiser
