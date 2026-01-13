@@ -28,6 +28,22 @@ from bot_ia  import plateau
 from bot_ia  import case
 from bot_ia  import joueur
 
+def analyse_case(plateau,joueur,direction):
+    pass
+
+def alarme_reserve(joueur):
+    """Vérifie si la réseve du joueur va bientôt s'épuiser
+
+    Args:
+        joueur (dico): un joueur, ex de joueur :{'couleur':..., 'nom':..., 'reserve' :... }
+
+    Returns:
+        bool: True, si la réserve doit être remplie rapidement, False sinon
+    """    
+    if joueur["reserve"] <= 10:
+        return True
+    return False
+
 def mon_IA(ma_couleur,carac_jeu, le_plateau, les_joueurs):
     """ Cette fonction permet de calculer les deux actions du joueur de couleur ma_couleur
         en fonction de l'état du jeu décrit par les paramètres. 
