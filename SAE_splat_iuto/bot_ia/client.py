@@ -24,7 +24,7 @@ class Client():
     def __init__(self, fin_de_message="\0", taille_chunk=8192):
         self.taille_chunk = taille_chunk
         self.fin_de_message = fin_de_message
-        self.id_client = random.randint(1, 1000)
+        self.id_client = random.randint(1, 1000)  
         self.reserve = ''
 
     def creer_socket(self, ip="", port=1111):
@@ -61,7 +61,7 @@ class Client():
                 if ind_0 != -1:  # le message recu contient un caractère '\0'
                     ok = True
                     # on met tout ce qui est avant le '\0' dans le message
-                    msg += msg_comp[:ind_0]
+                    msg += msg_comp[:ind_0]  
                     # et le reste dans la réserve
                     self.reserve = msg_comp[ind_0+1:]
                 else:
@@ -71,7 +71,7 @@ class Client():
     def envoi(self, msg):
         # envoi d'un message auquel on ajoute le caractère '\0' pour repérer les fins de message
         if self.socket.send((msg+'\0').encode()) == 0:
-            self.afficher_msg("le serveur semble planté")
+            self.afficher_msg("le serveur semble planté")  
             raise RuntimeError("Serveur inaccessible")
 
     def fermer(self):
@@ -84,7 +84,7 @@ TYPE_SERVEUR = "serveur"
 
 
 class ClientCyber(Client):
-    def __init__(self, fin_de_message="\0", taille_chunk=8192, separateur=";"):
+    def __init__(self, fin_de_message="\0", taille_chunk=8192, separateur=";"):  
         super().__init__(fin_de_message=fin_de_message, taille_chunk=taille_chunk)
         self.type_client = None
         self.nom_client = None
