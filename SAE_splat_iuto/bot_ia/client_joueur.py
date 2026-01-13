@@ -65,7 +65,7 @@ if __name__=="__main__":
     le_client.enregistrement(args.nom_equipe,"joueur")
     ok=True
     while ok:
-        ok,id_joueur,le_jeu=le_client.prochaine_commande()
+        ok,id_joueur,le_jeu=le_client.  prochaine_commande()
         if ok:
             val_carac_jeu,etat_plateau,les_joueurs=le_jeu.split("--------------------\n")
             joueurs={}
