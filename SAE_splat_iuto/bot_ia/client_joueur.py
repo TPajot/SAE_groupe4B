@@ -44,6 +44,35 @@ def alarme_reserve(joueur):
         return True
     return False
 
+
+def agir_bombe(plateau,joueur):
+    pass
+
+def agir_bouclier(plateau,joueur):
+    pass
+
+def agir_pistolet(plateau,joueur):
+    pass
+
+def action_selon_objet(plateau,joueur):
+    #faire attention à quand appeler cette fonction
+    if joueur["objet"]==const.BOMBE:
+        agir_bombe(plateau,joueur)
+
+    elif joueur["objet"]==const.BOUCLIER:
+        agir_bouclier(plateau,joueur)
+
+    elif joueur["objet"]==const.PISTOLET:
+        agir_pistolet(plateau,joueur)
+
+def attaque_judicieuse(plateau,joueur):
+    #faire des prédictions sur le coûts des attaques que l'on prévoit de faire
+    pass
+
+def direction_plus_zones_vides(plateau,joueur):
+    
+    pass
+
 def mon_IA(ma_couleur,carac_jeu, le_plateau, les_joueurs):
     """ Cette fonction permet de calculer les deux actions du joueur de couleur ma_couleur
         en fonction de l'état du jeu décrit par les paramètres. 
