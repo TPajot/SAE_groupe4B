@@ -368,6 +368,7 @@ def directions_possibles(plateau,pos):
 
     return dico
 
+
 def nb_joueurs_direction(plateau, pos, direction, distance_max):
     """indique combien de joueurs se trouve à portée sans protection de mur.
         Attention! il faut compter les joueurs qui sont sur la case pos
@@ -379,30 +380,38 @@ def nb_joueurs_direction(plateau, pos, direction, distance_max):
     Returns:
         int: le nombre de joueurs à portée de peinture (ou qui risque de nous peindre)
     """
-
     nb_joueurs = 0
-    i = 0
-    case_recherche = get_case(plateau,pos)
-    position_recherche = pos
-    while direction in directions_possibles(plateau, position_recherche) and i <= distance_max:
-            if direction == 'N' :
-             nb_joueurs += case.get_nb_joueurs(case_recherche) 
-             position_recherche = (position_recherche[0]-i,position_recherche[1])
-             case_recherche = get_case(plateau, position_recherche)
-            elif direction == 'S' :
-                nb_joueurs += case.get_nb_joueurs(case_recherche) 
-                position_recherche = (position_recherche[0]+1,position_recherche[1])
-                case_recherche = get_case(plateau, position_recherche)
-            elif direction == 'E' :
-                nb_joueurs += case.get_nb_joueurs(case_recherche) 
-                position_recherche = (position_recherche[0],position_recherche[1]+i)
-                case_recherche = get_case(plateau, position_recherche)
-            else : 
-                nb_joueurs += case.get_nb_joueurs(case_recherche) 
-                position_recherche = (position_recherche[0],position_recherche[1]-i)
-                case_recherche = get_case(plateau, position_recherche)
-            i += 1
-    return nb_joueurs 
+    distance = 0
+    ligne, colonne = pos
+
+    # Compter les joueurs sur la case de départ
+    case_actuelle = get_case(plateau, pos)
+    nb_joueurs += case.get_nb_joueurs(case_actuelle)
+
+    while distance < distance_max and direction in directions_possibles(plateau, (ligne, colonne)):
+
+        if direction == 'N':
+            ligne -= 1
+        elif direction == 'S':
+            ligne += 1
+        elif direction == 'E':
+            colonne += 1
+        else:  # 'O'
+            colonne -= 1
+
+        nouvelle_position = (ligne, colonne)
+        case_actuelle = get_case(plateau, nouvelle_position)
+
+        if case.est_mur(case_actuelle):
+            break
+
+        nb_joueurs += case.get_nb_joueurs(case_actuelle)
+        distance += 1
+
+    return nb_joueurs
+
+
+
 
 
 
