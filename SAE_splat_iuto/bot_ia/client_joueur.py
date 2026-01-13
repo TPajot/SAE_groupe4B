@@ -28,8 +28,24 @@ from bot_ia  import plateau
 from bot_ia  import case
 from bot_ia  import joueur
 
-def analyse_case(plateau,joueur,direction):
-    pass
+
+def analyse_case(plateau,joueur,): # plateau est un dico représenté comme ça: {"nb_lignes" : ..., "nb_colonnes" : ..., "les_valeurs": une liste de dictionnaires}
+    resultat = {"persos": [], "adversaire" :[], "vides" :[]}
+    liste_cases = plateau["les_valeurs"]
+    lignes = plateau["nb_lignes"]
+    colonnes = plateau["nb_colonnes"]
+    for i in range(lignes) :
+         la_ligne = liste_cases[i]
+         for j in range(colonnes) :
+              case_actuelle = la_ligne[j]
+              couleur = case.get_couleur(case_actuelle) == joueur["couleur"] 
+              if couleur == joueur["couleur"] :
+                  resultat["persos"].append((i,j))
+              elif couleur == ' ' or case.get_couleur(case_actuelle) == None : 
+                  resultat["vides"].append((i,j))
+              else :
+                 resultat["adversaire"].append((i,j)) 
+    return resultat  
 
 def alarme_reserve(joueur):
     """Vérifie si la réseve du joueur va bientôt s'épuiser
