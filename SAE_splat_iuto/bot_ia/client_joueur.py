@@ -90,9 +90,6 @@ def score_cout_simulee_direction(le_plateau,joueur,direction,distance_max):
     return (dict_simulation["nb_repeintes"],dict_simulation["cout"])
 
 
-def analyse_case(plateau,joueur,direction):
-    pass
-
 
 def alarme_reserve(joueur):
     """Vérifie si la réseve du joueur va bientôt s'épuiser
