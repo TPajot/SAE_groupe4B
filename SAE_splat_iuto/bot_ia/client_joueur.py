@@ -60,10 +60,9 @@ def trouver_mon_joueur(ma_couleur,les_joueurs):
     Returns:
         dict: mon joueur et ses caractéristiques
     """    
-    for joueur in les_joueurs:
-        if joueur["couleur"]==ma_couleur:
-            return joueur
-    return None
+    return les_joueurs[ma_couleur] #les_joueurs est un dico : {"R": {dico_du_joueur},
+                                    #                           "B": {dico_du_joueur},
+                                    #                             ...}
 
 def score_cout_simulee_direction(le_plateau,joueur,direction,distance_max):
     """Simule selon une direction, l'action de peindre et donne le nombre de points gagnés (=de cases repeintes) et le cout de cette action en points de réserve du joueur
