@@ -32,7 +32,7 @@ from bot_ia  import case
 from bot_ia  import joueur
 
 
-def analyse_case(plateau,joueur,): # plateau est un dico représenté comme ça: {"nb_lignes" : ..., "nb_colonnes" : ..., "les_valeurs": une liste de dictionnaires}
+def analyse_case(plateau,joueur): # plateau est un dico représenté comme ça: {"nb_lignes" : ..., "nb_colonnes" : ..., "les_valeurs": une liste de dictionnaires}
     resultat = {"persos": [], "adversaire" :[], "vides" :[]}
     liste_cases = plateau["les_valeurs"]
     lignes = plateau["nb_lignes"]
@@ -253,9 +253,13 @@ def mon_IA(ma_couleur,carac_jeu, le_plateau, les_joueurs):
         str: une chaine de deux caractères en majuscules indiquant la direction de peinture
             et la direction de déplacement
     """
-    joueur = trouver_mon_joueur(ma_couleur,les_joueurs)
+    mon_joueur = trouver_mon_joueur(ma_couleur,les_joueurs)
+    direction_peinture =  meilleure_direction_peinture(le_plateau,mon_joueur,carac_jeu["distance_max"])
+    direction_deplacement = meilleure_direction_deplacement(le_plateau,mon_joueur,direction_peinture,carac_jeu["distance_max"])
+
+    return direction_peinture+direction_deplacement
     # IA complètement aléatoire
-    return random.choice("XNSOE")+random.choice("NSEO")
+    #return random.choice("XNSOE")+random.choice("NSEO")
 
 if __name__=="__main__":
     noms_caracteristiques=["duree_actuelle","duree_totale","reserve_initiale","duree_obj","penalite","bonus_touche",
