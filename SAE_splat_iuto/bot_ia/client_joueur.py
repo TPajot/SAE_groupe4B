@@ -18,6 +18,7 @@ Tous droits réservés.
 Module contenant l'implémentation de l'IA et le programme principal du joueur
 """
 
+#Notes : Le bidon quand on est en positif remonte à 20 la réserve
 
 import argparse
 import random
@@ -74,7 +75,7 @@ def score_cout_simulee_direction(le_plateau,joueur,direction,distance_max):
     Returns:
         tuple: (score,cout)
     """    
-    pos_joueur = joueur["pos"]
+    pos_joueur = joueur["pos"] 
     ma_couleur = joueur["couleur"]
     ma_reserve = joueur["reserve"]
     mon_objet = joueur["objet"]
@@ -90,17 +91,72 @@ def score_cout_simulee_direction(le_plateau,joueur,direction,distance_max):
     return (dict_simulation["nb_repeintes"],dict_simulation["cout"])
 
 def meilleure_direction_peinture(le_plateau,joueur,distance_max):
-    cout = 0
+    cout = None
     score = 0
-    best_direct = None
-    for direction in "NSOE":
-        cout_d,score_d = score_cout_simulee_direction(le_plateau,joueur,direction,distance_max)
-        if best_direct==None and score_d > score:
+    pos_joueur = joueur['pos']
+    best_direct = 'X' #au départ, aucune direction n'est choisie, pas de peinture
+    d_possibles = plateau.directions_possibles(le_plateau,pos_joueur)
+
+    for direction in d_possibles:
+        score_d,cout_d = score_cout_simulee_direction(le_plateau,joueur,direction,distance_max)
+
+        if score_d > score:
             score=score_d
-            cout = cout_d  
+            cout=cout_d  
+            best_direct=direction
+
+        elif score == score_d :
+            if cout is None or cout_d<cout:
+                cout = cout_d
+                best_direct=direction
+
+    return best_direct
 
 
+#Pour meilleure_direction_deplacement je ne me base que sur le score max que l'on va obtenir en peignant
+#Il faudra plus tard prendre en compte les autres cas : si il y a des objets proches, selon notre réserve etc...
 
+#Ici, le meilleur déplacement est celui qui permet de peindre le plus de cases + gérer les autres cas
+def meilleure_direction_deplacement(le_plateau,le_joueur,distance_max):  #IL FAUT EFFECTUER LES PREDICTIONS EN PRENANT COMPTE DES CASES QUE LON VIENT DE PEINDRE
+    pos_joueur = le_joueur["pos"]
+    d_possibles = plateau.directions_possibles(le_plateau,le_joueur['pos'])
+    
+    best_score_prochain = 0
+    prochain_cout=None
+    prochain_deplacement = None
+
+    for direction in d_possibles: #il pourrait être intéressant d'élargir la simulation à toutes les cases pour calculer exactement la trajectoire qui nous fera gagner
+        nouvelle_pos = pos_joueur[0] + plateau.INC_DIRECTION[direction][0],pos_joueur[1]+plateau.INC_DIRECTION[direction][1]
+        
+        joueur_simule = joueur.Joueur(
+            le_joueur['couleur'],
+            le_joueur['nom'],
+            le_joueur['reserve'],
+            le_joueur["surface"],
+            le_joueur["points"],
+            nouvelle_pos, #SEUL CETTE LIGNE CHANGE
+            le_joueur["objet"],
+            le_joueur["duree_objet"]
+            )
+
+        prochaine_direc_a_peindre = meilleure_direction_peinture(le_plateau,joueur_simule,distance_max)
+        prochain_best_score_simule, prochain_cout_simule = score_cout_simulee_direction(le_plateau,joueur_simule,prochaine_direc_a_peindre,distance_max)
+
+        if prochain_best_score_simule>best_score_prochain:
+            best_score_prochain= prochain_best_score_simule
+            prochain_cout = prochain_cout_simule
+            prochain_deplacement=direction
+        
+        elif prochain_best_score_simule==best_score_prochain :
+            if prochain_cout is None or prochain_cout_simule<prochain_cout:
+                best_score_prochain= prochain_best_score_simule
+                prochain_cout = prochain_cout_simule
+                prochain_deplacement=direction
+    
+    if best_score_prochain==0: #ex si on est entouré de cases déjà peintes par notre couleur
+        return random.choice("NSEO") #SUPPRIMER CETTE LIGNE ET PENSER COMMENT GERER CES CAS LA SELON L'ETAT DU PLATEAU ET DE LA RESERVE
+
+    return prochain_deplacement
 
 def alarme_reserve(joueur):
     """Vérifie si la réseve du joueur va bientôt s'épuiser
