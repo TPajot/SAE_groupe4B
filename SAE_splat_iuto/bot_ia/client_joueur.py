@@ -23,6 +23,8 @@ Module contenant l'implémentation de l'IA et le programme principal du joueur
 import argparse
 import random
 
+import copy
+
 from bot_ia  import client
 from bot_ia  import const
 from bot_ia  import plateau
@@ -113,13 +115,42 @@ def meilleure_direction_peinture(le_plateau,joueur,distance_max):
     return best_direct
 
 
+def plateau_apres_peinture(le_plateau,le_joueur,direction,distance_max): #A utiliser pour calculer le prochain déplacement selon la peinture que l'on vient de faire
+    """Prends le plateau original, le copie et modifie cette copie selon l'action de peinture qui va être effectuée
+
+    Args:
+        le_plateau (dict): le plateau qui va être copié
+        le_joueur (dict): un joueur
+        direction (str): la direction dans laquelle on doit peindre
+        distance_max (int): la distance max à laquelle on va peindre
+
+    Returns:
+        tuple: plateau2,reserve2,res
+    """    
+
+    plateau2 = copy.deepcopy(le_plateau)
+
+    if le_joueur['objet']==const.PISTOLET:
+        peindre_murs = True
+    else:
+        peindre_murs=False
+
+    res = plateau.peindre(plateau2,le_joueur['pos'],direction,le_joueur['couleur'],le_joueur['reserve'],distance_max,peindre_murs,False)
+    #res est un dictionnaire de type {"cout": ...,"nb_repeintes": ..., "nb_murs_repeints": ...,"joueurs_touches": ...} obtenu grâce à plateau.peindre(.......)
+    reserve2 = le_joueur['reserve'] - res['cout']
+
+    return (plateau2,reserve2,res)
 #Pour meilleure_direction_deplacement je ne me base que sur le score max que l'on va obtenir en peignant
 #Il faudra plus tard prendre en compte les autres cas : si il y a des objets proches, selon notre réserve etc...
 
 #Ici, le meilleur déplacement est celui qui permet de peindre le plus de cases + gérer les autres cas
-def meilleure_direction_deplacement(le_plateau,le_joueur,distance_max):  #IL FAUT EFFECTUER LES PREDICTIONS EN PRENANT COMPTE DES CASES QUE LON VIENT DE PEINDRE
+def meilleure_direction_deplacement(le_plateau,le_joueur,direction_peinture,distance_max): #IL FAUT EFFECTUER LES PREDICTIONS EN PRENANT COMPTE DES CASES QUE LON VIENT DE PEINDRE
+    
+    le_plateau2,reserve2, _ = plateau_apres_peinture(le_plateau,le_joueur,direction_peinture,distance_max)
+    #on récupère une copie du plateau avec les cases coloriées selon notre choix de direction de peinture, et la reserve après cette peinture
+
     pos_joueur = le_joueur["pos"]
-    d_possibles = plateau.directions_possibles(le_plateau,le_joueur['pos'])
+    d_possibles = plateau.directions_possibles(le_plateau2,le_joueur['pos'])
     
     best_score_prochain = 0
     prochain_cout=None
@@ -131,16 +162,16 @@ def meilleure_direction_deplacement(le_plateau,le_joueur,distance_max):  #IL FAU
         joueur_simule = joueur.Joueur(
             le_joueur['couleur'],
             le_joueur['nom'],
-            le_joueur['reserve'],
+            reserve2, #on prend en compte la réserve après la peinture
             le_joueur["surface"],
             le_joueur["points"],
-            nouvelle_pos, #SEUL CETTE LIGNE CHANGE
+            nouvelle_pos,
             le_joueur["objet"],
             le_joueur["duree_objet"]
             )
 
-        prochaine_direc_a_peindre = meilleure_direction_peinture(le_plateau,joueur_simule,distance_max)
-        prochain_best_score_simule, prochain_cout_simule = score_cout_simulee_direction(le_plateau,joueur_simule,prochaine_direc_a_peindre,distance_max)
+        prochaine_direc_a_peindre = meilleure_direction_peinture(le_plateau2,joueur_simule,distance_max)
+        prochain_best_score_simule, prochain_cout_simule = score_cout_simulee_direction(le_plateau2,joueur_simule,prochaine_direc_a_peindre,distance_max)
 
         if prochain_best_score_simule>best_score_prochain:
             best_score_prochain= prochain_best_score_simule
